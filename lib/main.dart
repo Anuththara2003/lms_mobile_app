@@ -10,9 +10,20 @@ class LMSApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      title: 'LMS Mobile App',
+      
+      theme: ThemeData(
+        primarySwatch: Colors.indigo,
+        primaryColor: Colors.indigo,
+        useMaterial3: true,
+        inputDecorationTheme: const InputDecorationTheme(
+          border: OutlineInputBorder(),
+          prefixIconColor: Colors.indigo,
+        ),
+      ),
+      home: const LoginScreen(),
     );
   }
 }
