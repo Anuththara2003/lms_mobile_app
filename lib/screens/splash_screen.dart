@@ -13,84 +13,71 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    
-    
-    Timer(const Duration(seconds: 6), () {
-      if (mounted) {
-         Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const OnboardingScreen()),
+
+    Timer(const Duration(seconds: 3), () {
+      if (!mounted) return;
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const OnboardingScreen(),
+          ),
         );
-      }
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    
-      backgroundColor: Colors.indigo, 
+      backgroundColor: Colors.indigo,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // image eka awul nam temporarily me icon eka use karanna
+            const Icon(
+              Icons.school,
+              size: 100,
+              color: Colors.white,
+            ),
+
+      
             
-            Container(
-              padding: const EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                color: Colors.white, 
-                borderRadius: BorderRadius.circular(20), 
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    blurRadius: 10,
-                    spreadRadius: 5,
-                  ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.asset(
-                  'assets/images/logo2.png', 
-                  height: 120,              
-                  width: 120,               
-                  fit: BoxFit.contain,
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Icon(Icons.school, size: 80, color: Colors.indigo);
-                  },
-                ),
-              ),
+            Image.asset(
+              'assets/images/logo2.png',
+              height: 120,
+              width: 120,
             ),
             
-            const SizedBox(height: 40),
-           
-           
+
+            const SizedBox(height: 30),
+
             const Text(
               "LMS LEARNING",
               style: TextStyle(
-                fontSize: 28, 
-                fontWeight: FontWeight.bold, 
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
                 color: Colors.white,
-                letterSpacing: 3.0, 
+                letterSpacing: 2,
               ),
             ),
-            
+
             const SizedBox(height: 10),
-            
-            Text(
+
+            const Text(
               "Start your journey today",
               style: TextStyle(
-                fontSize: 16, 
-                color: Colors.white.withOpacity(0.8),
+                fontSize: 16,
+                color: Colors.white70,
               ),
             ),
-            
-            const SizedBox(height: 60),
-          
-            
+
+            const SizedBox(height: 40),
+
             const CircularProgressIndicator(
-              strokeWidth: 4,
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              color: Colors.white,
             ),
           ],
         ),
