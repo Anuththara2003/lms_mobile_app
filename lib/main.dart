@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'screens/login_screen.dart';
+// import 'screens/login_screen.dart';
+import 'screens/splash_screen.dart';
 
 void main() {
   runApp(const LMSApp());
@@ -23,7 +24,8 @@ class LMSApp extends StatelessWidget {
           prefixIconColor: Colors.indigo,
         ),
       ),
-      home: const LoginScreen(),
+      // home: const LoginScreen(),
+      home: const SplashScreen(),
     );
   }
 }
