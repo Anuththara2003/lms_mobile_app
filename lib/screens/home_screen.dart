@@ -7,44 +7,29 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("LMS Home"),
+        title: const Text("Dashboard"),
         backgroundColor: Colors.indigo,
         foregroundColor: Colors.white,
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center, 
-            children: [
-             
-              const Icon(
-                Icons.school, 
-                size: 80, 
-                color: Colors.blueAccent,
-              ),
-              
-              const SizedBox(height: 20), 
-
-              
-              const Text(
-                "Welcome to Learning Management System Dashboard!",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 22, 
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
-              ),
-              
-              const SizedBox(height: 10),
-
-              const Text(
-                "Happy Learning!",
-                style: TextStyle(fontSize: 16, color: Colors.grey),
-              ),
-            ],
-          ),
+      
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            
+            const Text(
+              "Hello, Sandaru!", 
+              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.indigo),
+            ),
+            const Text(
+              "Welcome back! Ready to learn something new?",
+              style: TextStyle(fontSize: 16, color: Colors.grey),
+            ),
+            const SizedBox(height: 30),
+            
+            
+          ],
         ),
       ),
     );
