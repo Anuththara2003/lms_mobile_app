@@ -57,7 +57,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       return 'Please enter your email';
                     }
 
-                    // Email regex pattern
                     final emailRegex = RegExp(
                       r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
                     );
@@ -93,10 +92,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
+                     
+                      
+                      
+                      String nameToDisplay = _emailController.text.split('@')[0];
+
+                    
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const HomeScreen(),
+                          builder: (context) => HomeScreen(userName: nameToDisplay),
                         ),
                       );
                     }
