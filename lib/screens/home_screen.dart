@@ -8,13 +8,15 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[50], 
       appBar: AppBar(
-        title: const Text("LMS Dashboard"),
+        title: const Text("LMS Dashboard", style: TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: Colors.indigo,
         foregroundColor: Colors.white,
+        elevation: 0,
         actions: [
           IconButton(
-            icon: const Icon(Icons.logout),
+            icon: const Icon(Icons.logout_rounded),
             onPressed: () {
               Navigator.pushAndRemoveUntil(
                 context,
@@ -30,51 +32,87 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Hello, User!", 
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.indigo),
+            // 1. Greeting Section
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Hello, User!", 
+                      style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.indigo[900]),
+                    ),
+                    const Text("Ready to learn something new today?", style: TextStyle(color: Colors.grey)),
+                  ],
+                ),
+                const CircleAvatar(
+                  radius: 25,
+                  backgroundColor: Colors.indigo,
+                  child: Icon(Icons.person, color: Colors.white),
+                )
+              ],
             ),
-            const Text("Ready to continue your learning journey?"),
+            
             const SizedBox(height: 30),
-            const Text("Your Progress", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+
+            // 2. Progress Cards with Icons
+
+            const Text("Your Success", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 15),
             Row(
               children: [
-                _buildCard(context, "12", "Courses", Colors.orange),
+                _buildCard(context, "12", "Courses", Icons.book_online, Colors.orange),
                 const SizedBox(width: 15),
-                _buildCard(context, "08", "Completed", Colors.green),
+                _buildCard(context, "08", "Completed", Icons.check_circle_outline, Colors.green),
               ],
             ),
+            
             const SizedBox(height: 30),
-            const Text("Continue Learning", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 15),
-            _buildCourseItem(context, "Flutter UI Basics", "Lesson 5 of 10"),
-            _buildCourseItem(context, "Dart for Beginners", "Lesson 2 of 12"),
-            _buildCourseItem(context, "Widget Lifecycle", "Lesson 1 of 05"),
+
+            // 3. Continue Learning Section 
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text("Continue Learning", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                TextButton(
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => CourseListScreen())),
+                  child: const Text("See All"),
+                )
+              ],
+            ),
+            const SizedBox(height: 10),
+            
+            _buildCourseItem(context, "Flutter UI Basics", "Lesson 5 of 10", 0.5),
+            _buildCourseItem(context, "Dart for Beginners", "Lesson 2 of 12", 0.2),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildCard(BuildContext context, String count, String label, Color color) {
+  
+  Widget _buildCard(BuildContext context, String count, String label, IconData icon, Color color) {
     return Expanded(
       child: GestureDetector(
-        onTap: () {
-          // 'const' අයින් කළා, දැන් CourseListScreen එකට යනවා
-          Navigator.push(context, MaterialPageRoute(builder: (context) => CourseListScreen()));
-        },
+        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => CourseListScreen())),
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(15),
-            border: Border.all(color: color.withOpacity(0.5)),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(color: color.withOpacity(0.1), blurRadius: 10, offset: const Offset(0, 5)),
+            ],
+            border: Border.all(color: color.withOpacity(0.2)),
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(count, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: color)),
-              Text(label),
+              Icon(icon, color: color, size: 30),
+              const SizedBox(height: 15),
+              Text(count, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.indigo[900])),
+              Text(label, style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w500)),
             ],
           ),
         ),
@@ -82,19 +120,33 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCourseItem(BuildContext context, String title, String subtitle) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+  
+  Widget _buildCourseItem(BuildContext context, String title, String subtitle, double progress) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10)],
+      ),
       child: ListTile(
-        leading: const Icon(Icons.play_circle_fill, color: Colors.indigo, size: 40),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+        leading: Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(color: Colors.indigo.withOpacity(0.1), shape: BoxShape.circle),
+          child: const Icon(Icons.play_arrow_rounded, color: Colors.indigo),
+        ),
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text(subtitle),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 14),
-        onTap: () {
-          // 'const' අයින් කළා, දැන් CourseListScreen එකට යනවා
-          Navigator.push(context, MaterialPageRoute(builder: (context) => CourseListScreen()));
-        },
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(subtitle),
+            const SizedBox(height: 8),
+            LinearProgressIndicator(value: progress, backgroundColor: Colors.grey[200], color: Colors.indigo, minHeight: 4),
+          ],
+        ),
+        trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Colors.grey),
+        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => CourseListScreen())),
       ),
     );
   }

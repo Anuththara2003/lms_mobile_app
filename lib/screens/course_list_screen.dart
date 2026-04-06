@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
 import '../models/course_model.dart'; 
+import 'course_details_screen.dart'; 
 
 class CourseListScreen extends StatelessWidget {
   CourseListScreen({super.key});
 
-  
   final List<Course> courses = [
     Course(
       title: "Flutter UI Development",
       instructor: "Prof. Sandaru",
       image: "assets/images/logo2.png",
-      description: "Learn to build beautiful mobile UIs from scratch.",
+      description: "Learn to build beautiful mobile UIs from scratch with Flutter Layouts.",
       lessons: "12 Lessons",
     ),
     Course(
       title: "Dart Programming Basics",
       instructor: "Dr. Binu",
       image: "assets/images/logo2.png",
-      description: "Master the foundation of Flutter apps.",
+      description: "Understand variables, functions, and OOP concepts in Dart.",
       lessons: "10 Lessons",
     ),
     Course(
       title: "Firebase Guide",
       instructor: "Admin",
       image: "assets/images/logo2.png",
-      description: "Connect your app to a real-time database.",
+      description: "Connect your Flutter app to real-time database and auth.",
       lessons: "08 Lessons",
     ),
   ];
@@ -65,8 +65,11 @@ class CourseListScreen extends StatelessWidget {
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () {
                 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Loading details for: ${course.title}")),
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CourseDetailsScreen(course: course),
+                  ),
                 );
               },
             ),
