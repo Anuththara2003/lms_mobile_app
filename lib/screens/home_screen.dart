@@ -3,7 +3,11 @@ import 'login_screen.dart';
 import 'course_list_screen.dart'; 
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+
+  final String userName; 
+
+
+  const HomeScreen({super.key, required this.userName});
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +43,9 @@ class HomeScreen extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    
                     Text(
-                      "Hello, User!", 
+                      "Hello, $userName!", 
                       style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.indigo[900]),
                     ),
                     const Text("Ready to learn something new today?", style: TextStyle(color: Colors.grey)),
@@ -56,8 +61,6 @@ class HomeScreen extends StatelessWidget {
             
             const SizedBox(height: 30),
 
-            // 2. Progress Cards with Icons
-
             const Text("Your Success", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 15),
             Row(
@@ -70,7 +73,6 @@ class HomeScreen extends StatelessWidget {
             
             const SizedBox(height: 30),
 
-            // 3. Continue Learning Section 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -91,7 +93,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  
   Widget _buildCard(BuildContext context, String count, String label, IconData icon, Color color) {
     return Expanded(
       child: GestureDetector(
@@ -120,7 +121,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  
   Widget _buildCourseItem(BuildContext context, String title, String subtitle, double progress) {
     return Container(
       margin: const EdgeInsets.only(bottom: 15),
