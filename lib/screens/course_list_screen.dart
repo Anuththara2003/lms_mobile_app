@@ -1,14 +1,32 @@
 import 'package:flutter/material.dart';
-
+import '../models/course_model.dart'; 
 
 class CourseListScreen extends StatelessWidget {
-  const CourseListScreen({super.key});
+  CourseListScreen({super.key});
 
-  final List<Map<String, String>> courses = const [
-    {"title": "Flutter UI Development", "instructor": "Prof. Sandaru", "image": "assets/images/logo2.png"},
-    {"title": "Dart Programming Basics", "instructor": "Dr. Binu", "image": "assets/images/logo2.png"},
-    {"title": "Firebase for Beginners", "instructor": "Admin", "image": "assets/images/logo2.png"},
-    {"title": "State Management Guide", "instructor": "Expert X", "image": "assets/images/logo2.png"},
+  
+  final List<Course> courses = [
+    Course(
+      title: "Flutter UI Development",
+      instructor: "Prof. Sandaru",
+      image: "assets/images/logo2.png",
+      description: "Learn to build beautiful mobile UIs from scratch.",
+      lessons: "12 Lessons",
+    ),
+    Course(
+      title: "Dart Programming Basics",
+      instructor: "Dr. Binu",
+      image: "assets/images/logo2.png",
+      description: "Master the foundation of Flutter apps.",
+      lessons: "10 Lessons",
+    ),
+    Course(
+      title: "Firebase Guide",
+      instructor: "Admin",
+      image: "assets/images/logo2.png",
+      description: "Connect your app to a real-time database.",
+      lessons: "08 Lessons",
+    ),
   ];
 
   @override
@@ -23,26 +41,32 @@ class CourseListScreen extends StatelessWidget {
         padding: const EdgeInsets.all(15),
         itemCount: courses.length,
         itemBuilder: (context, index) {
+          final course = courses[index];
+          
           return Card(
             elevation: 3,
             margin: const EdgeInsets.only(bottom: 15),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             child: ListTile(
-              contentPadding: const EdgeInsets.all(10),
-              leading: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: const Icon(Icons.school, size: 50, color: Colors.indigo), 
+              contentPadding: const EdgeInsets.all(12),
+              leading: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.indigo.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Icon(Icons.menu_book, color: Colors.indigo, size: 35),
               ),
               title: Text(
-                courses[index]['title']!,
+                course.title,
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
-              subtitle: Text("By ${courses[index]['instructor']}"),
+              subtitle: Text("By ${course.instructor}"),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () {
-              
+                
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Course: ${courses[index]['title']} - Coming Soon!")),
+                  SnackBar(content: Text("Loading details for: ${course.title}")),
                 );
               },
             ),

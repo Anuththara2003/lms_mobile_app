@@ -35,26 +35,19 @@ class HomeScreen extends StatelessWidget {
               style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.indigo),
             ),
             const Text("Ready to continue your learning journey?"),
-            
             const SizedBox(height: 30),
-
             const Text("Your Progress", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 15),
             Row(
               children: [
-               
                 _buildCard(context, "12", "Courses", Colors.orange),
                 const SizedBox(width: 15),
                 _buildCard(context, "08", "Completed", Colors.green),
               ],
             ),
-            
             const SizedBox(height: 30),
-
             const Text("Continue Learning", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 15),
-            
-            // 3. Course Item එකට context එක පාස් කරන්න
             _buildCourseItem(context, "Flutter UI Basics", "Lesson 5 of 10"),
             _buildCourseItem(context, "Dart for Beginners", "Lesson 2 of 12"),
             _buildCourseItem(context, "Widget Lifecycle", "Lesson 1 of 05"),
@@ -64,12 +57,12 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  
   Widget _buildCard(BuildContext context, String count, String label, Color color) {
     return Expanded(
       child: GestureDetector(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const CourseListScreen()));
+          // 'const' අයින් කළා, දැන් CourseListScreen එකට යනවා
+          Navigator.push(context, MaterialPageRoute(builder: (context) => CourseListScreen()));
         },
         child: Container(
           padding: const EdgeInsets.all(20),
@@ -89,7 +82,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  
   Widget _buildCourseItem(BuildContext context, String title, String subtitle) {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
@@ -100,8 +92,8 @@ class HomeScreen extends StatelessWidget {
         subtitle: Text(subtitle),
         trailing: const Icon(Icons.arrow_forward_ios, size: 14),
         onTap: () {
-         
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const CourseListScreen()));
+          // 'const' අයින් කළා, දැන් CourseListScreen එකට යනවා
+          Navigator.push(context, MaterialPageRoute(builder: (context) => CourseListScreen()));
         },
       ),
     );
