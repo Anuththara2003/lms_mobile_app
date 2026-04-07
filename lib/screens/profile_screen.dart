@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import '../widgets/custom_button.dart'; 
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  final String userEmail; 
+
+  
+  const ProfileScreen({super.key, required this.userEmail});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,6 @@ class ProfileScreen extends StatelessWidget {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-           
             const CircleAvatar(
               radius: 50,
               backgroundColor: Colors.indigo,
@@ -24,21 +26,22 @@ class ProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             
-            const Text(
-              "Sandaru", 
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)
+          
+            Text(
+              userEmail.split('@')[0], 
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)
             ),
-            const Text("sandaru@example.com", style: TextStyle(color: Colors.grey)),
+            
+            
+            Text(userEmail, style: const TextStyle(color: Colors.grey)),
             
             const Divider(height: 40), 
-            
             
             _buildProfileInfo(Icons.book, "Completed Courses", "08"),
             _buildProfileInfo(Icons.assignment, "Assignments Done", "15"),
             
             const Spacer(), 
 
-            
             CustomButton(
               text: "EDIT PROFILE", 
               onPressed: () {
@@ -51,7 +54,6 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
- 
   Widget _buildProfileInfo(IconData icon, String title, String value) {
     return ListTile(
       leading: Icon(icon, color: Colors.indigo),

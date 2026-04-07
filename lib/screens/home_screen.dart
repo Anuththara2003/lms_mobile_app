@@ -7,8 +7,10 @@ import '../widgets/custom_button.dart';
 
 class HomeScreen extends StatelessWidget {
   final String userName; 
+  final String userEmail; 
 
-  const HomeScreen({super.key, required this.userName});
+ 
+  const HomeScreen({super.key, required this.userName, required this.userEmail});
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +50,22 @@ class HomeScreen extends StatelessWidget {
                     const Text("Ready to learn something new today?", style: TextStyle(color: Colors.grey)),
                   ],
                 ),
+                
                 GestureDetector(
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileScreen())),
-                  child: const CircleAvatar(radius: 25, backgroundColor: Colors.indigo, child: Icon(Icons.person, color: Colors.white)),
+                  onTap: () {
+                    
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(
+                        builder: (context) => ProfileScreen(userEmail: userEmail),
+                      ),
+                    );
+                  },
+                  child: const CircleAvatar(
+                    radius: 25, 
+                    backgroundColor: Colors.indigo, 
+                    child: Icon(Icons.person, color: Colors.white),
+                  ),
                 )
               ],
             ),
@@ -91,7 +106,6 @@ class HomeScreen extends StatelessWidget {
             
             const SizedBox(height: 15),
 
-            
             CustomButton(
               text: "SEE ALL COURSES", 
               color: Colors.indigo.shade400,
@@ -105,6 +119,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  // Card Widget එක
   Widget _buildCard(BuildContext context, String count, String label, IconData icon, Color color, Widget? targetPage) {
     return Expanded(
       child: GestureDetector(
@@ -131,6 +146,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  // Course Item Widget එක
   Widget _buildCourseItem(BuildContext context, String title, String subtitle, double progress) {
     return Container(
       margin: const EdgeInsets.only(bottom: 15),
@@ -148,7 +164,7 @@ class HomeScreen extends StatelessWidget {
           ]
         ),
         trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Colors.grey),
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const CourseListScreen())),
+        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>  CourseListScreen())),
       ),
     );
   }

@@ -9,8 +9,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  
   final _formKey = GlobalKey<FormState>();
 
+ 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -26,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                
                 Image.asset(
                   'assets/images/logo.png',
                   height: 120,
@@ -46,6 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const Text("Login to continue your learning journey"),
                 const SizedBox(height: 30),
 
+                // 2. Email Field
                 TextFormField(
                   controller: _emailController,
                   decoration: const InputDecoration(
@@ -56,20 +60,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email';
                     }
-
-                    final emailRegex = RegExp(
-                      r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                    );
-
+                    
+                    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
                     if (!emailRegex.hasMatch(value)) {
                       return 'Enter a valid email';
                     }
-
                     return null;
                   },
                 ),
                 const SizedBox(height: 20),
 
+                // 3. Password Field
                 TextFormField(
                   controller: _passwordController,
                   obscureText: true,
@@ -89,19 +90,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 30),
 
+                // 4. LOGIN Button
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                     
-                      
                       
                       String nameToDisplay = _emailController.text.split('@')[0];
+                      String fullEmail = _emailController.text;
 
-                    
+                      
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => HomeScreen(userName: nameToDisplay),
+                          builder: (context) => HomeScreen(
+                            userName: nameToDisplay, 
+                            userEmail: fullEmail,
+                          ),
                         ),
                       );
                     }
