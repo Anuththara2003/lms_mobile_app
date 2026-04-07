@@ -3,6 +3,8 @@ import 'login_screen.dart';
 import 'course_list_screen.dart'; 
 import 'profile_screen.dart'; 
 import 'assignment_screen.dart'; 
+import '../widgets/custom_button.dart'; 
+
 class HomeScreen extends StatelessWidget {
   final String userName; 
 
@@ -42,22 +44,13 @@ class HomeScreen extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Hello, $userName!", 
-                      style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.indigo[900]),
-                    ),
+                    Text("Hello, $userName!", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.indigo[900])),
                     const Text("Ready to learn something new today?", style: TextStyle(color: Colors.grey)),
                   ],
                 ),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileScreen()));
-                  },
-                  child: const CircleAvatar(
-                    radius: 25,
-                    backgroundColor: Colors.indigo,
-                    child: Icon(Icons.person, color: Colors.white),
-                  ),
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileScreen())),
+                  child: const CircleAvatar(radius: 25, backgroundColor: Colors.indigo, child: Icon(Icons.person, color: Colors.white)),
                 )
               ],
             ),
@@ -69,51 +62,59 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 15),
             Row(
               children: [
-
                 _buildCard(context, "12", "Courses", Icons.book_online, Colors.orange,  CourseListScreen()),
-                
                 const SizedBox(width: 15),
-                
-               
-                _buildCard(context, "08", "Completed", Icons.check_circle_outline, Colors.green, AssignmentScreen()),
+                _buildCard(context, "08", "Completed", Icons.check_circle_outline, Colors.green, null),
               ],
             ),
             
             const SizedBox(height: 30),
 
-            // 3. Continue Learning Section 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text("Continue Learning", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                TextButton(
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => CourseListScreen())),
-                  child: const Text("See All"),
-                )
-              ],
-            ),
+            // 3. My Tasks Section
+            const Text("My Tasks", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
+            CustomButton(
+              text: "VIEW ALL ASSIGNMENTS", 
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => AssignmentScreen()));
+              },
+            ),
+
+            const SizedBox(height: 30),
+
+            // 4. Continue Learning Section 
+            const Text("Continue Learning", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 15),
             
             _buildCourseItem(context, "Flutter UI Basics", "Lesson 5 of 10", 0.5),
             _buildCourseItem(context, "Dart for Beginners", "Lesson 2 of 12", 0.2),
+            
+            const SizedBox(height: 15),
+
+            
+            CustomButton(
+              text: "SEE ALL COURSES", 
+              color: Colors.indigo.shade400,
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) =>  CourseListScreen()));
+              },
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildCard(BuildContext context, String count, String label, IconData icon, Color color, Widget targetPage) {
+  Widget _buildCard(BuildContext context, String count, String label, IconData icon, Color color, Widget? targetPage) {
     return Expanded(
       child: GestureDetector(
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => targetPage)),
+        onTap: targetPage == null ? null : () => Navigator.push(context, MaterialPageRoute(builder: (context) => targetPage)),
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(color: color.withOpacity(0.1), blurRadius: 10, offset: const Offset(0, 5)),
-            ],
+            boxShadow: [BoxShadow(color: color.withOpacity(0.1), blurRadius: 10, offset: const Offset(0, 5))],
             border: Border.all(color: color.withOpacity(0.2)),
           ),
           child: Column(
@@ -133,29 +134,21 @@ class HomeScreen extends StatelessWidget {
   Widget _buildCourseItem(BuildContext context, String title, String subtitle, double progress) {
     return Container(
       margin: const EdgeInsets.only(bottom: 15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10)],
-      ),
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10)]),
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-        leading: Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(color: Colors.indigo.withOpacity(0.1), shape: BoxShape.circle),
-          child: const Icon(Icons.play_arrow_rounded, color: Colors.indigo),
-        ),
+        leading: Container(padding: const EdgeInsets.all(10), decoration: BoxDecoration(color: Colors.indigo.withOpacity(0.1), shape: BoxShape.circle), child: const Icon(Icons.play_arrow_rounded, color: Colors.indigo)),
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
         subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start, 
           children: [
-            Text(subtitle),
-            const SizedBox(height: 8),
-            LinearProgressIndicator(value: progress, backgroundColor: Colors.grey[200], color: Colors.indigo, minHeight: 4),
-          ],
+            Text(subtitle), 
+            const SizedBox(height: 8), 
+            LinearProgressIndicator(value: progress, backgroundColor: Colors.grey[200], color: Colors.indigo, minHeight: 4)
+          ]
         ),
         trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Colors.grey),
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => CourseListScreen())),
+        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const CourseListScreen())),
       ),
     );
   }
