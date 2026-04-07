@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'login_screen.dart'; 
 import 'course_list_screen.dart'; 
+import 'profile_screen.dart'; 
 
 class HomeScreen extends StatelessWidget {
-
   final String userName; 
-
 
   const HomeScreen({super.key, required this.userName});
 
@@ -43,7 +42,6 @@ class HomeScreen extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    
                     Text(
                       "Hello, $userName!", 
                       style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.indigo[900]),
@@ -51,11 +49,22 @@ class HomeScreen extends StatelessWidget {
                     const Text("Ready to learn something new today?", style: TextStyle(color: Colors.grey)),
                   ],
                 ),
-                const CircleAvatar(
-                  radius: 25,
-                  backgroundColor: Colors.indigo,
-                  child: Icon(Icons.person, color: Colors.white),
+                
+                GestureDetector(
+                  onTap: () {
+                   
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ProfileScreen()),
+                    );
+                  },
+                  child: const CircleAvatar(
+                    radius: 25,
+                    backgroundColor: Colors.indigo,
+                    child: Icon(Icons.person, color: Colors.white),
+                  ),
                 )
+                // ---------------------------------
               ],
             ),
             
