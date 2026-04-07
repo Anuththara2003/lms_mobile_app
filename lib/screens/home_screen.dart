@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'login_screen.dart'; 
 import 'course_list_screen.dart'; 
 import 'profile_screen.dart'; 
-
+import 'assignment_screen.dart'; 
 class HomeScreen extends StatelessWidget {
   final String userName; 
 
@@ -49,14 +49,9 @@ class HomeScreen extends StatelessWidget {
                     const Text("Ready to learn something new today?", style: TextStyle(color: Colors.grey)),
                   ],
                 ),
-                
                 GestureDetector(
                   onTap: () {
-                   
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const ProfileScreen()),
-                    );
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileScreen()));
                   },
                   child: const CircleAvatar(
                     radius: 25,
@@ -64,24 +59,29 @@ class HomeScreen extends StatelessWidget {
                     child: Icon(Icons.person, color: Colors.white),
                   ),
                 )
-                // ---------------------------------
               ],
             ),
             
             const SizedBox(height: 30),
 
+            // 2. Your Success Section
             const Text("Your Success", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 15),
             Row(
               children: [
-                _buildCard(context, "12", "Courses", Icons.book_online, Colors.orange),
+
+                _buildCard(context, "12", "Courses", Icons.book_online, Colors.orange,  CourseListScreen()),
+                
                 const SizedBox(width: 15),
-                _buildCard(context, "08", "Completed", Icons.check_circle_outline, Colors.green),
+                
+               
+                _buildCard(context, "08", "Completed", Icons.check_circle_outline, Colors.green, AssignmentScreen()),
               ],
             ),
             
             const SizedBox(height: 30),
 
+            // 3. Continue Learning Section 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -102,10 +102,10 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCard(BuildContext context, String count, String label, IconData icon, Color color) {
+  Widget _buildCard(BuildContext context, String count, String label, IconData icon, Color color, Widget targetPage) {
     return Expanded(
       child: GestureDetector(
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => CourseListScreen())),
+        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => targetPage)),
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
