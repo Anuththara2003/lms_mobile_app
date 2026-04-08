@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
+import 'main_wrapper.dart'; 
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -9,10 +9,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  
   final _formKey = GlobalKey<FormState>();
-
- 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -28,81 +25,54 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                
                 Image.asset(
                   'assets/images/logo.png',
                   height: 120,
                   errorBuilder: (context, error, stackTrace) {
-                    return const Icon(
-                      Icons.school,
-                      size: 100,
-                      color: Colors.indigo,
-                    );
+                    return const Icon(Icons.school, size: 100, color: Colors.indigo);
                   },
                 ),
                 const SizedBox(height: 30),
-                const Text(
-                  "Welcome Back",
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                ),
+                const Text("Welcome Back", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 10),
                 const Text("Login to continue your learning journey"),
                 const SizedBox(height: 30),
 
-                // 2. Email Field
                 TextFormField(
                   controller: _emailController,
-                  decoration: const InputDecoration(
-                    labelText: "Email address",
-                    prefixIcon: Icon(Icons.email_outlined),
-                  ),
+                  decoration: const InputDecoration(labelText: "Email address", prefixIcon: Icon(Icons.email_outlined)),
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    
+                    if (value == null || value.isEmpty) return 'Please enter your email';
                     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-                    if (!emailRegex.hasMatch(value)) {
-                      return 'Enter a valid email';
-                    }
+                    if (!emailRegex.hasMatch(value)) return 'Enter a valid email';
                     return null;
                   },
                 ),
                 const SizedBox(height: 20),
 
-                // 3. Password Field
                 TextFormField(
                   controller: _passwordController,
                   obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: "Password",
-                    prefixIcon: Icon(Icons.lock_outline),
-                  ),
+                  decoration: const InputDecoration(labelText: "Password", prefixIcon: Icon(Icons.lock_outline)),
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter your password";
-                    }
-                    if (value.length < 6) {
-                      return "Password must be at least 6 characters";
-                    }
+                    if (value == null || value.isEmpty) return "Please enter your password";
+                    if (value.length < 6) return "Password must be at least 6 characters";
                     return null;
                   },
                 ),
                 const SizedBox(height: 30),
 
-                // 4. LOGIN Button
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      
                       String nameToDisplay = _emailController.text.split('@')[0];
                       String fullEmail = _emailController.text;
 
-                      
-                      Navigator.push(
+                     
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => HomeScreen(
+                          builder: (context) => MainWrapper(
                             userName: nameToDisplay, 
                             userEmail: fullEmail,
                           ),
@@ -114,9 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     backgroundColor: Colors.indigo,
                     foregroundColor: Colors.white,
                     minimumSize: const Size(double.infinity, 55),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   ),
                   child: const Text("LOGIN", style: TextStyle(fontSize: 18)),
                 ),
