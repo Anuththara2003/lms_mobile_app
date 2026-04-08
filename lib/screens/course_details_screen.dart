@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 import '../models/course_model.dart';
 
-class CourseDetailsScreen extends StatelessWidget {
+class CourseDetailsScreen extends StatefulWidget {
   final Course course;
-
   const CourseDetailsScreen({super.key, required this.course});
+
+  @override
+  State<CourseDetailsScreen> createState() => _CourseDetailsScreenState();
+}
+
+class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
+  
+  bool _isCompleted = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(course.title),
+        title: Text(widget.course.title),
         backgroundColor: Colors.indigo,
         foregroundColor: Colors.white,
       ),
@@ -18,8 +25,6 @@ class CourseDetailsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-           
-           
             Container(
               height: 200,
               width: double.infinity,
@@ -32,24 +37,28 @@ class CourseDetailsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  
-
-                  Text(
-                    course.title,
-                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
+                  Text(widget.course.title, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
-                  Text(
-                    "Instructor: ${course.instructor}",
-                    style: const TextStyle(fontSize: 16, color: Colors.indigo, fontWeight: FontWeight.w500),
-                  ),
-                  const SizedBox(height: 20),
+                  Text("Instructor: ${widget.course.instructor}", style: const TextStyle(fontSize: 16, color: Colors.indigo, fontWeight: FontWeight.w500)),
+                  
+                  const SizedBox(height: 30),
 
                   
-                  const Text(
-                    "Course Description",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  Center(
+                    child: AnimatedOpacity(
+                      duration: const Duration(milliseconds: 600),
+                      opacity: _isCompleted ? 1.0 : 0.0,
+                      child: const Column(
+                        children: [
+                          Icon(Icons.check_circle, color: Colors.green, size: 60),
+                          Text("Lesson Completed!", style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ),
                   ),
+
+                  const SizedBox(height: 20),
+                  const Text("Course Description", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 10),
                   const Text(
                     "This is a comprehensive course designed for beginners. You will learn the core concepts and practical skills to master this subject. Includes hands-on projects and quizzes.",
@@ -57,14 +66,8 @@ class CourseDetailsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 30),
 
-                  
-                  const Text(
-                    "Lessons in this Course",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
+                  const Text("Lessons in this Course", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 15),
-                  
-                 
                   _buildLessonItem("01", "Introduction to the Topic", "10:00 mins"),
                   _buildLessonItem("02", "Core Concepts & Theory", "25:30 mins"),
                   _buildLessonItem("03", "Practical Examples", "15:45 mins"),
@@ -74,27 +77,27 @@ class CourseDetailsScreen extends StatelessWidget {
           ],
         ),
       ),
-     
-
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ElevatedButton(
           onPressed: () {
             
+            setState(() {
+              _isCompleted = !_isCompleted;
+            });
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.indigo,
+            backgroundColor: _isCompleted ? Colors.green : Colors.indigo,
             foregroundColor: Colors.white,
             minimumSize: const Size(double.infinity, 55),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           ),
-          child: const Text("START LEARNING", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          child: Text(_isCompleted ? "COMPLETED" : "MARK AS COMPLETE", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         ),
       ),
     );
   }
 
-  
   Widget _buildLessonItem(String number, String title, String duration) {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
