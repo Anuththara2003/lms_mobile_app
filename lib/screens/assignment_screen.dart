@@ -4,6 +4,7 @@ import '../models/assignment_model.dart';
 class AssignmentScreen extends StatelessWidget {
   AssignmentScreen({super.key});
 
+
   final List<Assignment> assignments = [
     Assignment(
       title: "UI Design Principles",
@@ -27,53 +28,83 @@ class AssignmentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+   
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
+      backgroundColor: Colors.grey[50], 
       appBar: AppBar(
-        title: const Text("My Assignments"),
+        title: const Text("My Assignments", style: TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: Colors.indigo,
         foregroundColor: Colors.white,
+        elevation: 0, 
       ),
       body: ListView.builder(
-        padding: const EdgeInsets.all(15),
+        // Responsive padding based on screen width
+        padding: EdgeInsets.all(screenWidth * 0.04),
         itemCount: assignments.length,
         itemBuilder: (context, index) {
           final item = assignments[index];
           
           return Card(
-            margin: const EdgeInsets.only(bottom: 15),
+            margin: const EdgeInsets.only(bottom: 16),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            elevation: 2,
+            elevation: 1,
             child: ListTile(
-              contentPadding: const EdgeInsets.all(15),
-              leading: CircleAvatar(
-                backgroundColor: Colors.indigo.withOpacity(0.1),
-                child: const Icon(Icons.assignment_outlined, color: Colors.indigo),
+              // Responsive content padding
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: screenWidth * 0.04, 
+                vertical: 10
+              ),
+              leading: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.indigo.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.assignment_rounded, 
+                  color: Colors.indigo, 
+                  size: screenWidth * 0.07 // Responsive icon size
+                ),
               ),
               title: Text(
                 item.title,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold, 
+                  fontSize: screenWidth * 0.045 // Responsive font size
+                ),
               ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(item.subject),
-                  const SizedBox(height: 5),
-                  Text("Due: ${item.dueDate}", style: const TextStyle(color: Colors.redAccent, fontSize: 13)),
-                ],
+              subtitle: Padding(
+                padding: const EdgeInsets.only(top: 6.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(item.subject, style: const TextStyle(color: Colors.black54)),
+                    const SizedBox(height: 4),
+                    Text(
+                      "Due: ${item.dueDate}", 
+                      style: const TextStyle(color: Colors.redAccent, fontSize: 12, fontWeight: FontWeight.w500)
+                    ),
+                  ],
+                ),
               ),
-              // මෙන්න Status Indicator එක
+              // --- RESPONSIVE STATUS INDICATOR ) ---
               trailing: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: item.isSubmitted ? Colors.green[100] : Colors.orange[100],
+                  color: item.isSubmitted ? Colors.green[50] : Colors.orange[50],
                   borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: item.isSubmitted ? Colors.green.shade200 : Colors.orange.shade200
+                  ),
                 ),
                 child: Text(
                   item.isSubmitted ? "Submitted" : "Pending",
                   style: TextStyle(
                     color: item.isSubmitted ? Colors.green[800] : Colors.orange[800],
                     fontWeight: FontWeight.bold,
-                    fontSize: 12,
+                    fontSize: 11,
                   ),
                 ),
               ),
