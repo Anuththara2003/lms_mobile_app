@@ -14,15 +14,15 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
+   
     Timer(const Duration(seconds: 3), () {
       if (!mounted) return;
 
+      // Ensuring navigation happens after the frame is built to avoid errors
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-            builder: (context) => const OnboardingScreen(),
-          ),
+          MaterialPageRoute(builder: (context) => const OnboardingScreen()),
         );
       });
     });
@@ -30,55 +30,63 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+   
+    final size = MediaQuery.of(context).size;
+    final screenHeight = size.height;
+    final screenWidth = size.width;
+
     return Scaffold(
       backgroundColor: Colors.indigo,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // image eka awul nam temporarily me icon eka use karanna
-            const Icon(
-              Icons.school,
-              size: 100,
-              color: Colors.white,
-            ),
-
-      
-            
-            Image.asset(
-              'assets/images/logo2.png',
-              height: 120,
-              width: 120,
-            ),
-            
-
-            const SizedBox(height: 30),
-
-            const Text(
-              "LMS LEARNING",
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
+          
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
                 color: Colors.white,
-                letterSpacing: 2,
+                shape: BoxShape.circle,
+                boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 10)]
+              ),
+              child: Image.asset(
+                'assets/images/logo2.png',
+                height: screenHeight * 0.12, 
+                width: screenHeight * 0.12,
+                errorBuilder: (context, error, stackTrace) => Icon(
+                  Icons.school, 
+                  size: screenWidth * 0.2, 
+                  color: Colors.indigo
+                ),
               ),
             ),
 
-            const SizedBox(height: 10),
+            SizedBox(height: screenHeight * 0.04),
 
-            const Text(
+            Text(
+              "LMS LEARNING",
+              style: TextStyle(
+                fontSize: screenWidth * 0.07, 
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                letterSpacing: 2.5,
+              ),
+            ),
+
+            SizedBox(height: screenHeight * 0.01),
+
+            Text(
               "Start your journey today",
               style: TextStyle(
-                fontSize: 16,
+                fontSize: screenWidth * 0.04,
                 color: Colors.white70,
               ),
             ),
 
-            const SizedBox(height: 40),
+            SizedBox(height: screenHeight * 0.08),
 
-            const CircularProgressIndicator(
-              color: Colors.white,
-            ),
+            // Loading indicator to show progress
+            const CircularProgressIndicator(color: Colors.white),
           ],
         ),
       ),
