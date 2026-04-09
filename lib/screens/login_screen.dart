@@ -15,32 +15,60 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+  
+    final size = MediaQuery.of(context).size;
+    final screenWidth = size.width;
+    final screenHeight = size.height;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(25.0),
+          
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08),
           child: Form(
             key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                
                 Image.asset(
                   'assets/images/logo.png',
-                  height: 120,
+                  height: screenHeight * 0.15, 
                   errorBuilder: (context, error, stackTrace) {
-                    return const Icon(Icons.school, size: 100, color: Colors.indigo);
+                    return Icon(Icons.school, size: screenHeight * 0.12, color: Colors.indigo);
                   },
                 ),
-                const SizedBox(height: 30),
-                const Text("Welcome Back", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 10),
-                const Text("Login to continue your learning journey"),
-                const SizedBox(height: 30),
 
+                
+                SizedBox(height: screenHeight * 0.04),
+
+                Text(
+                  "Welcome Back", 
+                  style: TextStyle(
+                    fontSize: screenWidth * 0.07, 
+                    fontWeight: FontWeight.bold,
+                    color: Colors.indigo[900],
+                  ),
+                ),
+                
+                SizedBox(height: screenHeight * 0.01),
+                
+                const Text(
+                  "Login to continue your learning journey",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.grey),
+                ),
+
+                SizedBox(height: screenHeight * 0.05),
+
+                // Email Field
                 TextFormField(
                   controller: _emailController,
-                  decoration: const InputDecoration(labelText: "Email address", prefixIcon: Icon(Icons.email_outlined)),
+                  decoration: const InputDecoration(
+                    labelText: "Email address", 
+                    prefixIcon: Icon(Icons.email_outlined),
+                  ),
                   validator: (value) {
                     if (value == null || value.isEmpty) return 'Please enter your email';
                     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
@@ -48,27 +76,33 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 20),
 
+                SizedBox(height: screenHeight * 0.02),
+
+                // Password Field
                 TextFormField(
                   controller: _passwordController,
                   obscureText: true,
-                  decoration: const InputDecoration(labelText: "Password", prefixIcon: Icon(Icons.lock_outline)),
+                  decoration: const InputDecoration(
+                    labelText: "Password", 
+                    prefixIcon: Icon(Icons.lock_outline),
+                  ),
                   validator: (value) {
                     if (value == null || value.isEmpty) return "Please enter your password";
                     if (value.length < 6) return "Password must be at least 6 characters";
                     return null;
                   },
                 ),
-                const SizedBox(height: 30),
 
+                SizedBox(height: screenHeight * 0.04),
+
+                // Login Button
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       String nameToDisplay = _emailController.text.split('@')[0];
                       String fullEmail = _emailController.text;
 
-                     
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -83,11 +117,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.indigo,
                     foregroundColor: Colors.white,
-                    minimumSize: const Size(double.infinity, 55),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    minimumSize: Size(double.infinity, screenHeight * 0.07), // Button height එකත් responsive
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    elevation: 2,
                   ),
-                  child: const Text("LOGIN", style: TextStyle(fontSize: 18)),
+                  child: const Text("LOGIN", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 ),
+                
+                SizedBox(height: screenHeight * 0.02),
               ],
             ),
           ),
